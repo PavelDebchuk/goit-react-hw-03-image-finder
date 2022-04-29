@@ -38,10 +38,13 @@ class App extends Component {
   };
 
   toggleModal = () => {
-    this.setState(({ showModal }) => ({
-      showModal: !showModal,
+    this.setState(state => ({
+      showModal: !this.state.showModal,
     }));
-    console.log('click');
+    // this.setState(({ showModal }) => ({
+    // showModal: !showModal,
+    // }));
+    console.log('tooggleModal');
   };
 
   render() {
@@ -72,14 +75,6 @@ class App extends Component {
           incrementPage={this.incrementPage}
         ></ImageGallery>
         {showModal && <Modal onClose={this.toggleModal}></Modal>}
-
-        {/* {this.state.shouModal && (
-          <div className="overlay">
-            <div className="modal">
-              <img src="" alt="" />
-            </div>
-          </div>
-        )} */}
       </section>
     );
   }
