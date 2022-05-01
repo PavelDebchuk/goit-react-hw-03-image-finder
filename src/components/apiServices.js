@@ -2,7 +2,10 @@ import { Component } from 'react';
 
 export default class apiServices extends Component {
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.searchName !== this.props.searchName) {
+    if (
+      prevProps.searchName !== this.props.searchName ||
+      prevProps.perPage !== this.props.perPage
+    ) {
       const key = '24907304-6f88a85793adc81b0b0dcb604';
       this.props.loading();
 

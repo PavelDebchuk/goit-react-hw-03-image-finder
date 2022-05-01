@@ -11,6 +11,7 @@ class App extends Component {
     images: [],
     page: 1,
     perPage: 12,
+    largeImageURL: '',
     loading: false,
     showModal: false,
   };
@@ -29,22 +30,23 @@ class App extends Component {
 
   incrementPage = () => {
     this.setState(state => ({
-      page: (state.page += 1),
+      perPage: state.perPage + 12,
     }));
-    // console.log(this.state.images);
-    // console.log(this.state.perPage);
-    // console.log(this.state.images);
-    // console.log(this.state.page);
   };
 
-  toggleModal = () => {
+  openModal = (e, largeImageURL) => {
     this.setState(state => ({
-      showModal: !this.state.showModal,
+      showModal: true,
     }));
-    // this.setState(({ showModal }) => ({
-    // showModal: !showModal,
-    // }));
-    console.log('tooggleModal');
+    this.setState(state => ({
+      largeImageURL: largeImageURL,
+    }));
+  };
+
+  closeModal = e => {
+    this.setState(state => ({
+      showModal: false,
+    }));
   };
 
   render() {
@@ -52,9 +54,6 @@ class App extends Component {
     return (
       <section>
         <Searchbar searchName={this.handelFormSubmit}></Searchbar>
-        <button type="button" onClick={this.toggleModal}>
-          modal
-        </button>
         {this.state.page > 0 && (
           <ApiServices
             searchName={this.state.searchName}
@@ -62,7 +61,6 @@ class App extends Component {
             loading={this.loading}
             page={this.state.page}
             perPage={this.state.perPage}
-            incrementPage={this.incrementPage}
           ></ApiServices>
         )}
         {this.state.loading && (
@@ -73,8 +71,14 @@ class App extends Component {
         <ImageGallery
           images={this.state.images}
           incrementPage={this.incrementPage}
+          openModal={this.openModal}
         ></ImageGallery>
-        {showModal && <Modal onClose={this.toggleModal}></Modal>}
+        {showModal && (
+          <Modal
+            onClose={this.closeModal}
+            largeImageURL={this.state.largeImageURL}
+          ></Modal>
+        )}
       </section>
     );
   }

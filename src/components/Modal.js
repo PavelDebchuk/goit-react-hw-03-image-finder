@@ -5,28 +5,26 @@ import './components.styles.css';
 const modalRoot = document.querySelector('#modal-root');
 
 export default class Modal extends Component {
+  handlEscape = e => {
+    if (e.code === 'Escape') {
+      this.props.onClose();
+    }
+  };
+
   componentDidMount() {
-    console.log('componentDidMount');
-    window.addEventListener('keydown', e => {
-      console.log('Нажали ЕСК нужно закрить модалку');
-      if (e.code === 'Escape') {
-        this.props.onClose();
-      }
-    });
+    window.addEventListener('keydown', this.handlEscape);
   }
 
   componentWillUnmount() {
-    console.log('componentWillUnmaunt');
+    window.removeEventListener('keydown', this.handlEscape);
   }
+
   render() {
     return createPortal(
       <div className="Modal">
-        <div className="Overlay">
-          <button type="button" onClick={this.props.onClose}>
-            OOOOOOOOOOOO
-          </button>
+        <div className="Overlay" onClick={this.props.onClose}>
           <p>{this.props.children}</p>
-          <img src="" alt="" />
+          <img src={this.props.largeImageURL} alt="" />
         </div>
       </div>,
       modalRoot
