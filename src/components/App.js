@@ -10,7 +10,6 @@ class App extends Component {
     searchName: '',
     images: [],
     page: 1,
-    perPage: 12,
     largeImageURL: '',
     loading: false,
     showModal: false,
@@ -19,9 +18,23 @@ class App extends Component {
   handelFormSubmit = searchName => {
     this.setState({ searchName });
   };
+
   img = imagesData => {
-    this.setState({ images: imagesData });
-    this.setState({ loading: false });
+    const { images } = this.state;
+    console.log(this.state.images.length);
+    if (images.length === undefined) {
+      console.log('добавление в масив к images');
+      this.setState(prevState => ({
+        images: [...prevState.images, imagesData],
+      }));
+    } else {
+      console.log(images);
+      console.log('запись в масив');
+      this.setState(state => ({
+        images: imagesData,
+        loading: false,
+      }));
+    }
   };
 
   loading = () => {
@@ -29,12 +42,14 @@ class App extends Component {
   };
 
   incrementPage = () => {
+    const { page } = this.state;
     this.setState(state => ({
-      perPage: state.perPage + 12,
+      page: state.page + 1,
     }));
+    console.log(page);
   };
 
-  openModal = (e, largeImageURL) => {
+  openModal = largeImageURL => {
     this.setState(state => ({
       showModal: true,
     }));
@@ -43,7 +58,7 @@ class App extends Component {
     }));
   };
 
-  closeModal = e => {
+  closeModal = () => {
     this.setState(state => ({
       showModal: false,
     }));
@@ -60,12 +75,12 @@ class App extends Component {
             img={this.img}
             loading={this.loading}
             page={this.state.page}
-            perPage={this.state.perPage}
+            images={this.state.images}
           ></ApiServices>
         )}
         {this.state.loading && (
           <div className="Loading">
-            <Example></Example>
+            <Example />
           </div>
         )}
         <ImageGallery

@@ -6,16 +6,15 @@ const ImageGallery = ({ images, incrementPage, openModal }) => {
   return (
     <section>
       <ul className="gallery">
-        {hits &&
-          hits.map(({ id, webformatURL, largeImageURL }) => (
-            <li
-              className="gallery_item"
-              key={id}
-              onClick={e => openModal(e, largeImageURL)}
-            >
-              <img src={webformatURL} alt=""></img>
-            </li>
-          ))}
+        {hits?.map(({ id, webformatURL, largeImageURL }) => (
+          <li
+            className="gallery_item"
+            key={id}
+            onClick={e => openModal(largeImageURL)}
+          >
+            <img src={webformatURL} alt=""></img>
+          </li>
+        ))}
       </ul>
       {images.total > 12 && (
         <button type="button" onClick={incrementPage} className="Button">
