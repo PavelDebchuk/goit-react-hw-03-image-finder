@@ -6,7 +6,6 @@ export default class apiServices extends Component {
       prevProps.searchName !== this.props.searchName ||
       prevProps.page !== this.props.page
     ) {
-      console.log(this.props.images);
       const key = '24907304-6f88a85793adc81b0b0dcb604';
       this.props.loading();
 

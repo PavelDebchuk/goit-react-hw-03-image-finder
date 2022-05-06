@@ -1,12 +1,10 @@
 import React from 'react';
 
 const ImageGallery = ({ images, incrementPage, openModal }) => {
-  const hits = images.hits;
-
   return (
     <section>
       <ul className="gallery">
-        {hits?.map(({ id, webformatURL, largeImageURL }) => (
+        {images.map(({ id, webformatURL, largeImageURL }) => (
           <li
             className="gallery_item"
             key={id}
@@ -16,7 +14,7 @@ const ImageGallery = ({ images, incrementPage, openModal }) => {
           </li>
         ))}
       </ul>
-      {images.total > 12 && (
+      {images.length > 10 && (
         <button type="button" onClick={incrementPage} className="Button">
           Load more
         </button>

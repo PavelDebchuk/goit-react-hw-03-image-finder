@@ -17,24 +17,16 @@ class App extends Component {
 
   handelFormSubmit = searchName => {
     this.setState({ searchName });
+    if (this.state.searchName !== '') {
+      this.setState({ images: [] });
+    }
   };
 
   img = imagesData => {
-    const { images } = this.state;
-    console.log(this.state.images.length);
-    if (images.length === undefined) {
-      console.log('добавление в масив к images');
-      this.setState(prevState => ({
-        images: [...prevState.images, imagesData],
-      }));
-    } else {
-      console.log(images);
-      console.log('запись в масив');
-      this.setState(state => ({
-        images: imagesData,
-        loading: false,
-      }));
-    }
+    this.setState(prevState => ({
+      images: [...prevState.images, ...imagesData.hits],
+      loading: false,
+    }));
   };
 
   loading = () => {
@@ -42,11 +34,9 @@ class App extends Component {
   };
 
   incrementPage = () => {
-    const { page } = this.state;
     this.setState(state => ({
       page: state.page + 1,
     }));
-    console.log(page);
   };
 
   openModal = largeImageURL => {
@@ -92,7 +82,7 @@ class App extends Component {
           <Modal
             onClose={this.closeModal}
             largeImageURL={this.state.largeImageURL}
-          ></Modal>
+          />
         )}
       </section>
     );
